@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Duke {
@@ -13,12 +14,27 @@ public class Duke {
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        UserInstr user = new UserInstr();
+        User user = new User();
 
         while(true) {
             Scanner s = new Scanner(System.in);
-            String command = s.nextLine();
-            user.add(command);
+            String inputline = s.nextLine();
+            StringTokenizer st = new StringTokenizer(inputline);
+            String command = st.nextToken();
+            switch (command) {
+                case "bye":
+                    user.sayBye();
+                    break;
+                case "list":
+                    user.listOut();
+                    break;
+                case "done":
+                    int i = Integer.parseInt(st.nextToken());
+                    user.markAsDone(i);
+                    break;
+                default:
+                    user.add(inputline);
+            }
             if (user.isBye()) {
                 break;
             }
@@ -26,10 +42,14 @@ public class Duke {
     }
 }
 
-class UserInstr {
+class User {
     private String command;
-    private Vector<String> todolist = new Vector<String>();
-    private boolean isBye = false;
+    private Vector<Task> todolist = new Vector<Task>();
+    private boolean isBye;
+
+    User () {
+        this.isBye = false;
+    }
 
     public void printLine () {
         System.out.println("____________________________________________________________");
@@ -48,22 +68,54 @@ class UserInstr {
 
     public void listOut () {
         printLine();
+        System.out.println("Here are the tasks in your list:");
         for (int i = 1; i <= todolist.size(); i++) {
-            System.out.println(i+". "+todolist.elementAt(i-1));
+            System.out.print(i+".");
+            if (todolist.elementAt(i-1).isDone()) {
+                System.out.print("[✓] ");
+            } else {
+                System.out.print("[✗] ");
+            }
+            System.out.println(todolist.elementAt(i-1).getTaskName());
         }
         printLine();
     }
 
+    public void markAsDone (int i) {
+        todolist.elementAt(i-1).markAsDone();
+        printLine();
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("[✓] "+todolist.elementAt(i-1).getTaskName());
+        printLine();
+    }
+
     public void add (String command) {
-        if(command.equals("bye")) {
-            sayBye();
-        } else if(command.equals("list")) {
-            listOut();
-        } else {
-            todolist.add(command);
-            printLine();
-            System.out.println("added: " + command);
-            printLine();
-        }
+        Task t = new Task (command);
+        todolist.add(t);
+        printLine();
+        System.out.println("added: " + command);
+        printLine();
+    }
+}
+
+class Task {
+    private String taskName;
+    private boolean isDone;
+
+    Task (String taskName) {
+        this.taskName = taskName;
+        this.isDone = false;
+    }
+
+    public boolean isDone () {
+        return isDone;
+    }
+
+    public String getTaskName () {
+        return taskName;
+    }
+
+    public void markAsDone () {
+        isDone = true;
     }
 }
