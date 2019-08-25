@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Duke {
     public static void main(String[] args) {
@@ -12,12 +13,13 @@ public class Duke {
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
 
+        UserInstr user = new UserInstr();
+
         while(true) {
             Scanner s = new Scanner(System.in);
             String command = s.nextLine();
-            UserInstr user = new UserInstr(command);
-            user.echo();
-            if (user.sayBye()) {
+            user.add(command);
+            if (user.isBye()) {
                 break;
             }
         }
@@ -25,32 +27,43 @@ public class Duke {
 }
 
 class UserInstr {
-    private String instr;
-    private boolean isBye;
+    private String command;
+    private Vector<String> todolist = new Vector<String>();
+    private boolean isBye = false;
 
-    UserInstr (String instr) {
-        this.instr = instr;
-    }
-
-    public boolean sayBye () {
-        return isBye;
-    }
     public void printLine () {
         System.out.println("____________________________________________________________");
     }
 
-    public void echo () {
-        if(instr.equals("bye")) {
-            printLine();
-            System.out.println("Bye. Hope to see you again soon!");
-            printLine();
-            isBye = true;
-        } else {
-            printLine();
-            System.out.println(instr);
-            printLine();
-            isBye = false;
-        }
+    public boolean isBye () {
+        return isBye;
+    }
 
+    public void sayBye () {
+        printLine();
+        System.out.println("Bye. Hope to see you again soon!");
+        printLine();
+        isBye = true;
+    }
+
+    public void listOut () {
+        printLine();
+        for (int i = 1; i <= todolist.size(); i++) {
+            System.out.println(i+". "+todolist.elementAt(i-1));
+        }
+        printLine();
+    }
+
+    public void add (String command) {
+        if(command.equals("bye")) {
+            sayBye();
+        } else if(command.equals("list")) {
+            listOut();
+        } else {
+            todolist.add(command);
+            printLine();
+            System.out.println("added: " + command);
+            printLine();
+        }
     }
 }
