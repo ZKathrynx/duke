@@ -12,18 +12,21 @@ public class Duke {
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        /*Scanner s = new Scanner(System.in);
-        String command = s.nextLine();
-        UserInstr user = new UserInstr(command);
-        while(!user.sayBye()) {
+        while(true) {
+            Scanner s = new Scanner(System.in);
+            String command = s.nextLine();
+            UserInstr user = new UserInstr(command);
             user.echo();
-        }*/
+            if (user.sayBye()) {
+                break;
+            }
+        }
     }
 }
 
 class UserInstr {
     private String instr;
-    private boolean isBye = false;
+    private boolean isBye;
 
     UserInstr (String instr) {
         this.instr = instr;
@@ -37,6 +40,17 @@ class UserInstr {
     }
 
     public void echo () {
-        System.out.println(instr);
+        if(instr.equals("bye")) {
+            printLine();
+            System.out.println("Bye. Hope to see you again soon!");
+            printLine();
+            isBye = true;
+        } else {
+            printLine();
+            System.out.println(instr);
+            printLine();
+            isBye = false;
+        }
+
     }
 }
