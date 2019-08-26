@@ -46,6 +46,10 @@ public class  User {
             new Command().addDeadline(toDoList,extractTaskName(command),extractDdl(command));
         } else if (command.matches("event(.*)")) {
             new Command().addEvent(toDoList,extractTaskName(command),extractDate(command));
+        } else if (command.matches("help(.*)")) {
+            new Command().showHelp();
+        } else {
+            new Command().unknownCommand(command.substring(0,command.indexOf(" ")));
         }
     }
 }

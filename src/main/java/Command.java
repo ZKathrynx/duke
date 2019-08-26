@@ -64,7 +64,17 @@ public class Command {
         printLine();
     }
 
-    /*public void showHelp () {
-        //
-    }*/
+    public void unknownCommand (String command) {
+        printLine();
+        System.out.println("OOPS! I haven't studied the \""+command+"\" command yet. So sad :(");
+        System.out.println("Probably you can check your spelling or key in \"help\" to see what commands I know! :)");
+        System.out.println("Or just wait for my lazy programmer to add this new feature haha :P");
+        printLine();
+    }
+
+    public void showHelp () {
+        printLine();
+        System.out.println("a new feature waiting to be developed...");
+        printLine();
+    }
 }
