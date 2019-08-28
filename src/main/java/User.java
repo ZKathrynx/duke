@@ -7,6 +7,7 @@ import java.util.Vector;
 public class  User {
     private Vector<Task> toDoList = new Vector<Task>();
     private boolean isBye;
+    private Save save = new Save();
 
     public User () {
         this.isBye = false;
@@ -71,6 +72,7 @@ public class  User {
             try {
                 int tempTaskNo = extractTaskNo(command);
                 new Command().markAsDone(toDoList,tempTaskNo);
+                save.updateTask(toDoList);
             } catch (DukeException e){
                 e.printMessage();
             }
@@ -80,6 +82,7 @@ public class  User {
             try {
                 String tempName = extractTaskName(command);
                 new Command().addToDo(toDoList,tempName);
+                save.appendTask(toDoList.elementAt(toDoList.size()-1));
             } catch (DukeException e){
                 e.printMessage();
             }
@@ -88,6 +91,7 @@ public class  User {
                 String tempName = extractTaskName(command);
                 String tempDdl = extractDdl(command);
                 new Command().addDeadline(toDoList,tempName,tempDdl);
+                save.appendTask(toDoList.elementAt(toDoList.size()-1));
             } catch (DukeException e){
                 e.printMessage();
             }
@@ -96,6 +100,7 @@ public class  User {
                 String tempName = extractTaskName(command);
                 String tempDate = extractDate(command);
                 new Command().addDeadline(toDoList,tempName,tempDate);
+                save.appendTask(toDoList.elementAt(toDoList.size()-1));
             } catch (DukeException e){
                 e.printMessage();
             }

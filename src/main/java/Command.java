@@ -11,31 +11,31 @@ public class Command {
     }
 
     public void addToDo (Vector<Task> toDoList, String taskName) {
-        Task task = new Task(taskName,TaskType.ToDo);
+        Task task = new Task(taskName,TaskType.T);
         toDoList.add(task);
         printLine();
         System.out.println("Got it. I've added this task:");
-        task.printTask();
+        System.out.println(task.taskInfo());
         System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
         printLine();
     }
 
     public void addDeadline (Vector<Task> toDoList, String taskName, String ddl) {
-        Task task = new Deadline(taskName,TaskType.Deadline,ddl);
+        Task task = new Deadline(taskName,TaskType.D,ddl);
         toDoList.add(task);
         printLine();
         System.out.println("Got it. I've added this task:");
-        task.printTask();
+        System.out.println(task.taskInfo());
         System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
         printLine();
     }
 
     public void addEvent (Vector<Task> toDoList, String taskName, String date) {
-        Task task = new Event(taskName,TaskType.Deadline,date);
+        Task task = new Event(taskName,TaskType.E,date);
         toDoList.add(task);
         printLine();
         System.out.println("Got it. I've added this task:");
-        task.printTask();
+        System.out.println(task.taskInfo());
         System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
         printLine();
     }
@@ -45,7 +45,7 @@ public class Command {
         System.out.println("Here are the tasks in your list:");
         for (int i = 1; i <= toDoList.size(); i++) {
             System.out.print(i+".");
-            toDoList.elementAt(i-1).printTask();
+            System.out.println(toDoList.elementAt(i-1).taskInfo());
         }
         printLine();
     }

@@ -3,7 +3,7 @@
  */
 
 enum TaskType {
-    ToDo,Deadline,Event;
+    T,D,E;
 }
 
 class Task {
@@ -36,14 +36,12 @@ class Task {
         isDone = true;
     }
 
-    //Others
-    public void printTask() {
+    public String taskInfo() {
         if (isDone) {
-            System.out.print("[\u2713]");
+            return "[\u2713] [T] "+taskName;
         } else {
-            System.out.print("[\u2717]");
+            return "[\u2717] [T] "+taskName;
         }
-        System.out.println("[T] "+taskName);
     }
 }
 
@@ -60,14 +58,14 @@ class Deadline extends Task {
     }
 
     @Override
-    public void printTask() {
+    public String taskInfo() {
         if (super.isDone()) {
-            System.out.print("[\u2713]");
+            return "[\u2713] [D] " + super.getTaskName() + " (by: " + ddl;
         } else {
-            System.out.print("[\u2717]");
+            return "[\u2717] [D] " + super.getTaskName() + " (by: " + ddl;
         }
-        System.out.println("[D] "+super.getTaskName()+" (by: "+ddl+")");
     }
+
 }
 
 class Event extends Task {
@@ -83,12 +81,12 @@ class Event extends Task {
     }
 
     @Override
-    public void printTask() {
+    public String taskInfo() {
         if (super.isDone()) {
-            System.out.print("[\u2713]");
+            return "[\u2713] [E] " + super.getTaskName() + " (at: " + date;
         } else {
-            System.out.print("[\u2717]");
+            return "[\u2717] [E] " + super.getTaskName() + " (at: " + date;
         }
-        System.out.println("[E] "+super.getTaskName()+" (by: "+date+")");
     }
+
 }
