@@ -2,6 +2,10 @@
  * Copyright © 2019 by Zheng Kaining
  */
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 enum TaskType {
     T,D,E;
 }
@@ -46,46 +50,48 @@ class Task {
 }
 
 class Deadline extends Task {
-    private String ddl;
+    private Date ddl;
 
-    public Deadline(String taskName, TaskType taskType, String ddl) {
+    public Deadline(String taskName, TaskType taskType, Date ddl) {
         super(taskName,taskType);
         this.ddl = ddl;
     }
 
-    public String getDdl() {
+    public Date getDdl() {
         return ddl;
     }
 
     @Override
     public String taskInfo() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd hh.mm");
         if (super.isDone()) {
-            return "[\u2713] [D] " + super.getTaskName() + " (by: " + ddl;
+            return "[\u2713] [D] " + super.getTaskName() + " (by: " + dateFormat.format(ddl);
         } else {
-            return "[\u2717] [D] " + super.getTaskName() + " (by: " + ddl;
+            return "[\u2717] [D] " + super.getTaskName() + " (by: " + dateFormat.format(ddl);
         }
     }
 
 }
 
 class Event extends Task {
-    private String date;
+    private Date date;
 
-    public Event(String taskName, TaskType taskType, String date) {
+    public Event(String taskName, TaskType taskType, Date date) {
         super(taskName,taskType);
         this.date = date;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
     @Override
     public String taskInfo() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd hh.mm");
         if (super.isDone()) {
-            return "[\u2713] [E] " + super.getTaskName() + " (at: " + date;
+            return "[\u2713] [E] " + super.getTaskName() + " (at: " + dateFormat.format(date);
         } else {
-            return "[\u2717] [E] " + super.getTaskName() + " (at: " + date;
+            return "[\u2717] [E] " + super.getTaskName() + " (at: " + dateFormat.format(date);
         }
     }
 

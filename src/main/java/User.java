@@ -2,6 +2,9 @@
  * Copyright © 2019 by Zheng Kaining
  */
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 public class  User {
@@ -36,19 +39,19 @@ public class  User {
         }
     }
 
-    public String extractDdl (String command) throws DukeException{
+    public Date extractDdl (String command) throws DukeException, ParseException {
         if(command.indexOf("\\by")==-1) {
             throw new DukeException("OOPS! you haven't set the deadline");
         } else {
-            return command.substring(command.indexOf("\\by") + 4);
+            return new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(command.substring(command.indexOf("\\by") + 4));
         }
     }
 
-    public String extractDate (String command) throws DukeException{
+    public Date extractDate (String command) throws DukeException, ParseException {
         if(command.indexOf("\\at")==-1) {
             throw new DukeException("OOPS! you haven't set the date");
         } else {
-            return command.substring(command.indexOf("\\by") + 4);
+            return new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(command.substring(command.indexOf("\\at") + 4));
         }
     }
 
@@ -89,20 +92,28 @@ public class  User {
         } else if (command.matches("deadline(.*)")) {
             try {
                 String tempName = extractTaskName(command);
-                String tempDdl = extractDdl(command);
+                Date tempDdl = extractDdl(command);
                 new Command().addDeadline(toDoList,tempName,tempDdl);
                 save.appendTask(toDoList.elementAt(toDoList.size()-1));
             } catch (DukeException e){
                 e.printMessage();
+            } catch (ParseException e) {
+                System.out.println("____________________________________________________________");
+                System.out.println("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
+                System.out.println("____________________________________________________________");
             }
         } else if (command.matches("event(.*)")) {
             try {
                 String tempName = extractTaskName(command);
-                String tempDate = extractDate(command);
-                new Command().addDeadline(toDoList,tempName,tempDate);
+                Date tempDate = extractDate(command);
+                new Command().addEvent(toDoList,tempName,tempDate);
                 save.appendTask(toDoList.elementAt(toDoList.size()-1));
             } catch (DukeException e){
                 e.printMessage();
+            } catch (ParseException e) {
+                System.out.println("____________________________________________________________");
+                System.out.println("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
+                System.out.println("____________________________________________________________");
             }
         } else if (command.matches("help(.*)")) {
             new Command().showHelp();

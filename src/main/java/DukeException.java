@@ -7,9 +7,10 @@ public class DukeException extends Exception {
         super(message);
     }
 
-    public void printMessage () {
+    public void printMessage() {
         System.out.println("____________________________________________________________");
         System.out.println(getMessage());
         System.out.println("____________________________________________________________");
     }
+
 }

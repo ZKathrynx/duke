@@ -2,6 +2,7 @@
  * Copyright © 2019 by Zheng Kaining
  */
 
+import java.util.Date;
 import java.util.Vector;
 
 public class Command {
@@ -20,7 +21,7 @@ public class Command {
         printLine();
     }
 
-    public void addDeadline (Vector<Task> toDoList, String taskName, String ddl) {
+    public void addDeadline (Vector<Task> toDoList, String taskName, Date ddl) {
         Task task = new Deadline(taskName,TaskType.D,ddl);
         toDoList.add(task);
         printLine();
@@ -30,7 +31,7 @@ public class Command {
         printLine();
     }
 
-    public void addEvent (Vector<Task> toDoList, String taskName, String date) {
+    public void addEvent (Vector<Task> toDoList, String taskName, Date date) {
         Task task = new Event(taskName,TaskType.E,date);
         toDoList.add(task);
         printLine();
