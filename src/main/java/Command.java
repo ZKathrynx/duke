@@ -83,7 +83,7 @@ public class Command {
         printLine();
     }
 
-    public void find (Vector<Task> toDoList, String key) {
+    /*public void find (Vector<Task> toDoList, String key) {
         printLine();
         System.out.println("Here are the matching tasks in your list:");
         int count = 1;
@@ -96,7 +96,7 @@ public class Command {
             }
         }
         printLine();
-    }
+    }*/
 
     public void showHelp () {
         printLine();
