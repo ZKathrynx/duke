@@ -124,14 +124,14 @@ public class  User {
             } catch (DukeException e){
                 e.printMessage();
             }
-        } /*else if (command.matches("find(.*)")) {
+        } else if (command.matches("find(.*)")) {
             try {
                 String tempName = extractTaskName(command);
                 new Command().find(toDoList,tempName);
             } catch (DukeException e){
                 e.printMessage();
             }
-        }*/ else {
+        } else {
             if (command.indexOf(" ")==-1) {
                 new Command().unknownCommand(command);
             } else {
