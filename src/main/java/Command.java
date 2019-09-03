@@ -55,7 +55,8 @@ public class Command {
         toDoList.elementAt(i-1).markAsDone();
         printLine();
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[\u2713] "+toDoList.elementAt(i-1).getTaskName());
+        System.out.println(toDoList.elementAt(i-1).taskInfo());
+        System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
         printLine();
     }
 
@@ -69,6 +70,16 @@ public class Command {
         printLine();
         System.out.println("OOPS! I haven't studied the \""+command+"\" command yet. So sad :(");
         System.out.println("Probably you can check your spelling or key in \"help\" to see what commands I know! :)");
+        printLine();
+    }
+
+    public void delete (Vector<Task> toDoList, int i) {
+        String temp = toDoList.elementAt(i-1).taskInfo();
+        toDoList.remove(i-1);
+        printLine();
+        System.out.println("Noted! I've removed this task from list:");
+        System.out.println(temp);
+        System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
         printLine();
     }
 
