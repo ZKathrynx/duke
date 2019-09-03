@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class  User {
     private Vector<Task> toDoList = new Vector<Task>();
@@ -21,15 +23,12 @@ public class  User {
     }
 
     public int extractTaskNo (String command) throws DukeException {
-        if (command.length()<5) {
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(command);
+        if(!m.find()) {
             throw new DukeException("OOPS! the command needs a number as parameter");
         } else {
-            try {
-                int ans = Integer.parseInt(command.substring(5));
-            } catch (Exception e) {
-                throw new DukeException("OOPS! your input is not an integer");
-            }
-            int ans = Integer.parseInt(command.substring(5));
+            int ans = Integer.parseInt(m.group());
             if (ans > toDoList.size()) {
                 throw new DukeException("OOPS! the current maximum number of tasks is "+ toDoList.size());
             } else if (toDoList.elementAt(ans-1).isDone()) {
@@ -117,7 +116,22 @@ public class  User {
             }
         } else if (command.matches("help(.*)")) {
             new Command().showHelp();
-        } else {
+        } else if (command.matches("delete(.*)")) {
+            try {
+                int tempTaskNo = extractTaskNo(command);
+                new Command().delete(toDoList,tempTaskNo);
+                save.updateTask(toDoList);
+            } catch (DukeException e){
+                e.printMessage();
+            }
+        } /*else if (command.matches("find(.*)")) {
+            try {
+                String tempName = extractTaskName(command);
+                new Command().find(toDoList,tempName);
+            } catch (DukeException e){
+                e.printMessage();
+            }
+        }*/ else {
             if (command.indexOf(" ")==-1) {
                 new Command().unknownCommand(command);
             } else {
