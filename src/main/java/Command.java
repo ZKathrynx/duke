@@ -55,7 +55,8 @@ public class Command {
         toDoList.elementAt(i-1).markAsDone();
         printLine();
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[\u2713] "+toDoList.elementAt(i-1).getTaskName());
+        System.out.println(toDoList.elementAt(i-1).taskInfo());
+        System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
         printLine();
     }
 
@@ -69,6 +70,31 @@ public class Command {
         printLine();
         System.out.println("OOPS! I haven't studied the \""+command+"\" command yet. So sad :(");
         System.out.println("Probably you can check your spelling or key in \"help\" to see what commands I know! :)");
+        printLine();
+    }
+
+    public void delete (Vector<Task> toDoList, int i) {
+        String temp = toDoList.elementAt(i-1).taskInfo();
+        toDoList.remove(i-1);
+        printLine();
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println(temp);
+        System.out.println("Now you have "+toDoList.size()+" tasks in your list.");
+        printLine();
+    }
+
+    public void find (Vector<Task> toDoList, String key) {
+        printLine();
+        System.out.println("Here are the matching tasks in your list:");
+        int count = 1;
+        for (int i = 0; i < toDoList.size(); i ++)
+        {
+            if (toDoList.elementAt(i).getTaskName().contains(key)) {
+                System.out.print(count+".");
+                System.out.println(toDoList.elementAt(i).taskInfo());
+                count ++;
+            }
+        }
         printLine();
     }
 
