@@ -74,20 +74,6 @@ public class Command {
         printLine();
     }
 
-    public void find (Vector<Task> toDoList, String key) {
-        printLine();
-        System.out.println("Here are the matching tasks in your list:");
-        int count = 1;
-        for (int i = 0; i < toDoList.size(); i ++) {
-            if (toDoList.elementAt(i).getTaskName().contains(key)) {
-                System.out.print(count+".");
-                System.out.println(toDoList.elementAt(i).taskInfo());
-                count ++;
-            }
-        }
-        printLine();
-    }
-
     public void sayBye () {
         printLine();
         System.out.println("Bye. Hope to see you again soon!");
