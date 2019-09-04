@@ -39,7 +39,8 @@ public class  User {
     }
 
     public Date extractDdl (String command) throws DukeException, ParseException {
-        if(command.indexOf("\\by")==-1) {
+        command.trim();
+        if(command.indexOf("\\by")==-1||command.indexOf("\\by") + 2 == command.length()-1) {
             throw new DukeException("OOPS! you haven't set the deadline");
         } else {
             return new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(command.substring(command.indexOf("\\by") + 4));
@@ -47,7 +48,8 @@ public class  User {
     }
 
     public Date extractDate (String command) throws DukeException, ParseException {
-        if(command.indexOf("\\at")==-1) {
+        command.trim();
+        if(command.indexOf("\\at")==-1||command.indexOf("\\at") + 2 == command.length()-1) {
             throw new DukeException("OOPS! you haven't set the date");
         } else {
             return new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(command.substring(command.indexOf("\\at") + 4));
@@ -59,9 +61,19 @@ public class  User {
             throw new DukeException("OOPS! the task name cannot be empty");
         } else {
             if (!command.contains("\\by")&&!command.contains("\\at")) {
-                return command.substring(command.indexOf(" "));
+                String temp = command.substring(command.indexOf(" "));
+                if (temp.trim().length()==0) {
+                    throw new DukeException("OOPS! the task name cannot be empty");
+                } else {
+                    return temp;
+                }
             } else {
-                return command.substring(command.indexOf(" "),command.indexOf("\\"));
+                String temp = command.substring(command.indexOf(" "),command.indexOf("\\"));
+                if (temp.trim().length()==0) {
+                    throw new DukeException("OOPS! the task name cannot be empty");
+                } else {
+                    return temp;
+                }
             }
         }
     }

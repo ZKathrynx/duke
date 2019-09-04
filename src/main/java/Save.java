@@ -12,7 +12,7 @@ public class Save {
 
     //default filepath and name
     Save () {
-        this.filePath = "";
+        this.filePath = "F:\\lenovo\\Desktop\\CS2113T\\Duke";
         this.fileName = "data.txt";
         File file = new File(this.filePath+this.fileName);
         if (!file.exists()) {

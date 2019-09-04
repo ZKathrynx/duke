@@ -1,0 +1,12 @@
+todo watch anime
+event kimetsu no yayiba \at 2019.09.08 22.00
+deadline CS2113T \by 2019.09.05 23.59
+done 3
+done 3
+done 4
+list
+todo
+yeah
+event test this \at
+deadline push to github \by Thursday
+bye

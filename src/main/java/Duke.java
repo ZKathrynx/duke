@@ -25,8 +25,8 @@ public class Duke {
         User user = new User();
         new Duke().welcomeScreen();
 
-        while(true) {
-            Scanner s = new Scanner(System.in);
+        Scanner s = new Scanner(System.in);
+        while(s.hasNextLine()) {
             String inputLine = s.nextLine();
             user.parseCommand(inputLine);
             if (user.isBye()) {
