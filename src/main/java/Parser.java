@@ -8,13 +8,16 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class  User {
-    private TaskList toDoList = new TaskList();
-    private boolean isBye;
-    private Storage save = new Storage();
+public class Parser {
 
-    public User () {
+    private TaskList toDoList;
+    private boolean isBye;
+    private Storage save;
+
+    Parser (TaskList toDoList, Storage save) {
+        this.toDoList = toDoList;
         this.isBye = false;
+        this.save = save;
     }
 
     public boolean isBye () {
@@ -77,7 +80,7 @@ public class  User {
         }
     }
 
-    public void parseCommand (String command) {
+    public void parse (String command) {
         if (command.matches("bye(.*)")) {
             new Command().sayBye();
             isBye = true;
@@ -108,9 +111,7 @@ public class  User {
             } catch (DukeException e){
                 e.printMessage();
             } catch (ParseException e) {
-                System.out.println("____________________________________________________________");
                 System.out.println("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
-                System.out.println("____________________________________________________________");
             }
         } else if (command.matches("event(.*)")) {
             try {
@@ -121,9 +122,7 @@ public class  User {
             } catch (DukeException e){
                 e.printMessage();
             } catch (ParseException e) {
-                System.out.println("____________________________________________________________");
                 System.out.println("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
-                System.out.println("____________________________________________________________");
             }
         } else if (command.matches("help(.*)")) {
             new Command().showHelp();
@@ -150,4 +149,5 @@ public class  User {
             }
         }
     }
+
 }
