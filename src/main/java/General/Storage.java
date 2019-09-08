@@ -14,9 +14,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+/**
+ * Save the list to file
+ */
 public class Storage {
     String filePath;
 
+    /**
+     * Constructor
+     * @param filePath the path to save file
+     * @param mode new a file or open existing one
+     */
     public Storage(String filePath, String mode) {
         this.filePath = filePath;
         if (mode.equals("new")) {
@@ -39,7 +47,10 @@ public class Storage {
         }
     }
 
-
+    /**
+     * Append new task to file
+     * @param task the task to append
+     */
     public void appendTask (Task task)  {
         try {
             FileWriter fw = new FileWriter(this.filePath, true);
@@ -51,6 +62,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Update whole file
+     * @param toDoList the new ToDoList
+     */
     public void updateTask (TaskList toDoList) {
         try {
             FileWriter fw = new FileWriter(this.filePath);
@@ -65,6 +80,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Load from file
+     * @return a vector of tasks from existing file
+     */
     public Vector<Task> load () {
         Vector<Task> tasks = null;
         Task tempTask;
