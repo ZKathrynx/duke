@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parse command
+ */
 public class Parser {
 
     private TaskList toDoList;
@@ -22,6 +25,12 @@ public class Parser {
     private Storage save;
     private Ui ui;
 
+    /**
+     * Constructor
+     * @param toDoList list of tasks
+     * @param save save the list
+     * @param ui show messages
+     */
     public Parser(TaskList toDoList, Storage save, Ui ui) {
         this.toDoList = toDoList;
         this.isBye = false;
@@ -29,10 +38,20 @@ public class Parser {
         this.ui = ui;
     }
 
+    /**
+     * Tell whether a command is exit or not
+     * @return true when the command is exit
+     */
     public boolean isBye () {
         return isBye;
     }
 
+    /**
+     * Extract task number from string
+     * @param command the string to extract from
+     * @return the task number
+     * @throws DukeException when there is not appropriate task number
+     */
     public int extractTaskNo (String command) throws DukeException {
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(command);
@@ -49,6 +68,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Extract task deadline from string
+     * @param command the string to extract from
+     * @return the deadline
+     * @throws DukeException when the deadline is not set
+     * @throws ParseException when the deadline is not in correct format
+     */
     public Date extractDdl (String command) throws DukeException, ParseException {
         command.trim();
         if(command.indexOf("\\by")==-1||command.indexOf("\\by") + 2 == command.length()-1) {
@@ -58,6 +84,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Extract task date from string
+     * @param command the string to extract from
+     * @return the date
+     * @throws DukeException when the date is not set
+     * @throws ParseException when the date is not in correct format
+     */
     public Date extractDate (String command) throws DukeException, ParseException {
         command.trim();
         if(command.indexOf("\\at")==-1||command.indexOf("\\at") + 2 == command.length()-1) {
@@ -67,6 +100,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Extract task name from string
+     * @param command the string to extract from
+     * @return the task name
+     * @throws DukeException when the task name is not set
+     */
     public String extractTaskName (String command) throws DukeException{
         if (command.indexOf(" ")==-1) {
             throw new DukeException("OOPS! the task name cannot be empty");
@@ -89,6 +128,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Parse the command
+     * @param command the command to parse
+     */
     public void parse (String command) {
         String token;
         if (command.indexOf(" ")==-1) {
