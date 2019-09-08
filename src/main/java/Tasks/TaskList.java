@@ -1,6 +1,7 @@
 /*
  * Copyright © 2019 by Zheng Kaining
  */
+package Tasks;
 
 import java.util.Vector;
 
@@ -8,9 +9,9 @@ public class TaskList {
     private Vector<Task> tasks = new Vector<Task>();
 
     //Constructor
-    TaskList () {
+    public TaskList() {
     }
-    TaskList (Vector<Task> tasks) {
+    public TaskList (Vector<Task> tasks) {
         this.tasks = tasks;
     }
 

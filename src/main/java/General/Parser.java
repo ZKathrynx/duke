@@ -1,6 +1,13 @@
 /*
  * Copyright © 2019 by Zheng Kaining
  */
+//package duke;
+//import duke.Commands.Command;
+
+package General;
+
+import Commands.*;
+import Tasks.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,13 +15,18 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class  User {
-    private TaskList toDoList = new TaskList();
-    private boolean isBye;
-    private Storage save = new Storage();
+public class Parser {
 
-    public User () {
+    private TaskList toDoList;
+    private boolean isBye;
+    private Storage save;
+    private Ui ui;
+
+    public Parser(TaskList toDoList, Storage save, Ui ui) {
+        this.toDoList = toDoList;
         this.isBye = false;
+        this.save = save;
+        this.ui = ui;
     }
 
     public boolean isBye () {
@@ -77,77 +89,73 @@ public class  User {
         }
     }
 
-    public void parseCommand (String command) {
-        if (command.matches("bye(.*)")) {
-            new Command().sayBye();
+    public void parse (String command) {
+        String token;
+        if (command.indexOf(" ")==-1) {
+            token = command;
+        } else {
+            token = command.substring(0,command.indexOf(" "));
+        }
+
+        if (token.equals("bye")) {
+            new ExitCommand().execute(ui);
             isBye = true;
-        } else if (command.matches("done(.*)")) {
+        } else if (token.equals("done")) {
             try {
                 int tempTaskNo = extractTaskNo(command);
-                new Command().markAsDone(toDoList,tempTaskNo);
-                save.updateTask(toDoList);
+                new DoneCommand().execute(toDoList,save,tempTaskNo,ui);
             } catch (DukeException e){
-                e.printMessage();
+                ui.showError(e.getMessage());
             }
-        } else if (command.matches("list(.*)")) {
-            new Command().listOut(toDoList);
-        } else if (command.matches("todo(.*)")) {
+        } else if (token.equals("list")) {
+            new ListCommand().execute(toDoList,ui);
+        } else if (token.equals("todo")) {
             try {
                 String tempName = extractTaskName(command);
-                new Command().addToDo(toDoList,tempName);
-                save.appendTask(toDoList.elementAt(toDoList.size()-1));
+                Task tempTask = new ToDo(tempName);
+                new AddCommand().execute(toDoList,save,tempTask,ui);
             } catch (DukeException e){
-                e.printMessage();
+                ui.showError(e.getMessage());
             }
-        } else if (command.matches("deadline(.*)")) {
+        } else if (token.equals("deadline")) {
             try {
                 String tempName = extractTaskName(command);
                 Date tempDdl = extractDdl(command);
-                new Command().addDeadline(toDoList,tempName,tempDdl);
-                save.appendTask(toDoList.elementAt(toDoList.size()-1));
+                Task tempTask = new Deadline(tempName,tempDdl);
+                new AddCommand().execute(toDoList,save,tempTask,ui);
             } catch (DukeException e){
-                e.printMessage();
+                ui.showError(e.getMessage());
             } catch (ParseException e) {
-                System.out.println("____________________________________________________________");
-                System.out.println("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
-                System.out.println("____________________________________________________________");
+                ui.showError("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
             }
-        } else if (command.matches("event(.*)")) {
+        } else if (token.equals("event")) {
             try {
                 String tempName = extractTaskName(command);
                 Date tempDate = extractDate(command);
-                new Command().addEvent(toDoList,tempName,tempDate);
-                save.appendTask(toDoList.elementAt(toDoList.size()-1));
+                Task tempTask = new Event(tempName,tempDate);
+                new AddCommand().execute(toDoList,save,tempTask,ui);
             } catch (DukeException e){
-                e.printMessage();
+                ui.showError(e.getMessage());
             } catch (ParseException e) {
-                System.out.println("____________________________________________________________");
-                System.out.println("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
-                System.out.println("____________________________________________________________");
+                ui.showError("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
             }
-        } else if (command.matches("help(.*)")) {
-            new Command().showHelp();
-        } else if (command.matches("delete(.*)")) {
+        } else if (token.equals("delete")) {
             try {
                 int tempTaskNo = extractTaskNo(command);
-                new Command().delete(toDoList,tempTaskNo);
-                save.updateTask(toDoList);
+                new DeleteCommand().execute(toDoList,tempTaskNo,save,ui);
             } catch (DukeException e){
-                e.printMessage();
+                ui.showError(e.getMessage());
             }
-        } else if (command.matches("find(.*)")) {
+        } else if (token.equals("find")) {
             try {
                 String tempName = extractTaskName(command);
-                new Command().find(toDoList,tempName);
+                new FindCommand().execute(toDoList,ui,tempName);
             } catch (DukeException e){
-                e.printMessage();
+                ui.showError(e.getMessage());
             }
         } else {
-            if (command.indexOf(" ")==-1) {
-                new Command().unknownCommand(command);
-            } else {
-                new Command().unknownCommand(command.substring(0,command.indexOf(" ")));
-            }
+            new UnknownCommand().execute(ui,token);
         }
     }
+
 }
