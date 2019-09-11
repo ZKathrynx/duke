@@ -108,7 +108,7 @@ public class Storage {
                     tasks.add(tempTask);
                 } else if (line.charAt(4)=='E') {
                     String tempName = line.substring(6,line.indexOf("(at"));
-                    Date date = new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(line.substring(line.indexOf("(at") + 4));
+                    Date date = new SimpleDateFormat("yyyy.MM.dd HH.mm").parse(line.substring(line.indexOf("(at") + 4));
                     tempTask = new Event(tempName,date);
                     if (isDone) {
                         tempTask.markAsDone();
@@ -116,7 +116,7 @@ public class Storage {
                     tasks.add(tempTask);
                 } else {
                     String tempName = line.substring(6,line.indexOf("(by"));
-                    Date date = new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(line.substring(line.indexOf("(by") + 4));
+                    Date date = new SimpleDateFormat("yyyy.MM.dd HH.mm").parse(line.substring(line.indexOf("(by") + 4));
                     tempTask = new Deadline(tempName,date);
                     if (isDone) {
                         tempTask.markAsDone();

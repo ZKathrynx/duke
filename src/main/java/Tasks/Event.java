@@ -36,7 +36,7 @@ public class Event extends Task {
      */
     @Override
     public String taskInfo() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd hh.mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm");
         if (super.isDone()) {
             return "[V] [E] " + super.getTaskName() + " (at: " + dateFormat.format(date);
         } else {
