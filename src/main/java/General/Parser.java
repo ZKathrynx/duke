@@ -80,7 +80,8 @@ public class Parser {
         if(command.indexOf("\\by")==-1||command.indexOf("\\by") + 2 == command.length()-1) {
             throw new DukeException("OOPS! you haven't set the deadline");
         } else {
-            return new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(command.substring(command.indexOf("\\by") + 4));
+            //System.out.println(command.substring(command.indexOf("\\by") + 4));
+            return new SimpleDateFormat("yyyy.MM.dd HH.mm").parse(command.substring(command.indexOf("\\by") + 4));
         }
     }
 
@@ -96,7 +97,7 @@ public class Parser {
         if(command.indexOf("\\at")==-1||command.indexOf("\\at") + 2 == command.length()-1) {
             throw new DukeException("OOPS! you haven't set the date");
         } else {
-            return new SimpleDateFormat("yyyy.mm.dd hh.mm").parse(command.substring(command.indexOf("\\at") + 4));
+            return new SimpleDateFormat("yyyy.MM.dd HH.mm").parse(command.substring(command.indexOf("\\at") + 4));
         }
     }
 
@@ -169,7 +170,7 @@ public class Parser {
             } catch (DukeException e){
                 ui.showError(e.getMessage());
             } catch (ParseException e) {
-                ui.showError("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
+                ui.showError("OOPS! the format of date should be:yyyy.MM.dd HH.mm");
             }
         } else if (token.equals("event")) {
             try {
@@ -180,7 +181,7 @@ public class Parser {
             } catch (DukeException e){
                 ui.showError(e.getMessage());
             } catch (ParseException e) {
-                ui.showError("OOPS! the format of date should be:yyyy.mm.dd hh.mm");
+                ui.showError("OOPS! the format of date should be:yyyy.MM.dd HH.mm");
             }
         } else if (token.equals("delete")) {
             try {
