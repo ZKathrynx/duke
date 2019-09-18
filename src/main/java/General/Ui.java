@@ -33,19 +33,23 @@ public class Ui {
     /**
      * Show error message
      * @param message error message
+     * @return the error message printed
      */
-    public void showError (String message) {
+    public String showError (String message) {
         System.out.println(message);
+        return message;
     }
 
     /**
      * Show messages
      * @param messages messages
+     * @return the first parameter
      */
-    public void showMessage (String... messages) {
+    public String[] showMessage (String... messages) {
         for (String message : messages) {
             System.out.println(message);
         }
+        return messages;
     }
 
 }
